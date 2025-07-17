@@ -43,10 +43,6 @@ Route::post("/upload/capsule/audio/{capsule_id}", []);
 Route::post("/upload/capsule/bg/{capsule_id}", []);
 Route::post("/upload/capsule/color/{capsule_id}", []);
 
-Route::post("", []);
 
-
-
-
-
-// Route::post("/add_update_task/{id?}", [TaskController::class, "addOrUpdateTask"]);
+//Export api's
+Route::post("/export/{id}", []);
