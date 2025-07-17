@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->integer('country_id');
             $table->text('message');
             $table->timestamps();
-            $table->timestamp('revealed_at');
+            $table->timestamp('revealed_at')->nullable();
         });
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
