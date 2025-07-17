@@ -35,9 +35,15 @@ Route::post("/reveal_capsule/{id}", []);
 Route::post("/add_update_capsule{id?}", []);
 Route::post("/delete_capsule/{id}", []);
 
+//Media routes
+Route::post("/upload/pbg/{profile_id}", []);
+Route::post("/upload/pfp/{profile_id}", []);
+Route::post("/upload/capsule/image/{capsule_id}", []);
+Route::post("/upload/capsule/audio/{capsule_id}", []);
+Route::post("/upload/capsule/bg/{capsule_id}", []);
+Route::post("/upload/capsule/color/{capsule_id}", []);
 
-
-
+Route::post("", []);
 
 
 
