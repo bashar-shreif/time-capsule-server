@@ -4,21 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use App\Models\Mood;
 
 class Capsule extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'user_id',
-    'privacy_settings_id',
-    'reveal_mode_id',
-    'mood_id',
-    'country_id',
-    'message',
-    'ip_address',
-    'color',
-    'revealed_at',
-    'background',
-];
+        'user_id',
+        'privacy_settings_id',
+        'reveal_mode_id',
+        'mood_id',
+        'country_id',
+        'message',
+        'ip_address',
+        'color',
+        'revealed_at',
+        'background',
+    ];
+    protected function mood() {
+        return $this->belongsTo(Mood::class, 'mood_id', 'id');
+    }
 }
