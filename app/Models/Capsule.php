@@ -21,7 +21,12 @@ class Capsule extends Model
         'revealed_at',
         'background',
     ];
-    protected function mood() {
+    public function mood()
+    {
         return $this->belongsTo(Mood::class, 'mood_id', 'id');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class,'capsules_tags','tag_id','capsule_id');
     }
 }
