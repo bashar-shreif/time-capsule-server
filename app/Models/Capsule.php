@@ -27,6 +27,10 @@ class Capsule extends Model
     }
     public function tags()
     {
-        return $this->belongsToMany(Tag::class,'capsules_tags','tag_id','capsule_id');
+        return $this->belongsToMany(Tag::class, 'capsules_tags', 'tag_id', 'capsule_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id', 'id');
     }
 }
