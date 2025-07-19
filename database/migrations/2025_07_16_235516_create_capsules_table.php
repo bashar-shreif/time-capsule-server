@@ -23,7 +23,7 @@ return new class extends Migration {
         });
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
-            $table->string('mood');
+            $table->string('mood')->unique();
             $table->timestamps();
         });
         Schema::create('countries', function (Blueprint $table) {

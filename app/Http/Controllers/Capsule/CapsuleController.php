@@ -12,50 +12,49 @@ use App\Models\Capsule;
 class CapsuleController extends Controller
 {
     protected static string $model = Capsule::class;
-    protected static array $defaults = [];
-
     public static function getByUserId($user_id)
     {
         $capsules = Capsule::where("user_id", $user_id)->get();
         return ResponseTrait::responseJSON($capsules);
     }
 
-    public function getByMoodId($mood_id)
+    public function getByMood($mood)
     {
-        $capsules = Capsule::where("mood_id", $mood_id)->get();
+        $capsules = CapsuleService::getByMood($mood);
         return ResponseTrait::responseJSON($capsules);
     }
 
-    public function getByCountryId($country_id)
+    public function getByCountry($country)
     {
-        $capsules = Capsule::where("country_id", $country_id)->get();
+        $capsules = CapsuleService::getByCountry($country);
+        return ResponseTrait::responseJSON($capsules);
+    }
+    public function getByIp($ip)
+    {
+        $capsules = CapsuleService::getByIp($ip);
         return ResponseTrait::responseJSON($capsules);
     }
 
 
     public function getPending($user_id)
     {
-        $capsules = Capsule::where("user_id", $user_id)
-            ->where('revealed_at', '>=', now())
-            ->get();
-
+        $capsules = CapsuleService::getPending($user_id);
         return ResponseTrait::responseJSON($capsules);
+
     }
 
 
     public function getRevealed($user_id)
     {
-        $capsules = Capsule::where("user_id", $user_id)
-            ->where('revealed_at', '<=', now())
-            ->get();
-
+        $capsules = CapsuleService::getRevealed($user_id);
         return ResponseTrait::responseJSON($capsules);
     }
 
 
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
-        return CapsuleService::createOrUpdateCapsule($request, $id);
+        $capsule = CapsuleService::createOrUpdateCapsule($request, $id);
+        return ResponseTrait::responseJSON($capsule);
     }
 
     public function deleteAll($user_id, $id = null)
