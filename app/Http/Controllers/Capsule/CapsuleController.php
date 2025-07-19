@@ -17,13 +17,16 @@ class CapsuleController extends Controller
         $capsules = Capsule::where("user_id", $user_id)->get();
         return ResponseTrait::responseJSON($capsules);
     }
-
+    static function getAllOnMap()
+    {
+        $objects = CapsuleService::getAllOnMap();
+        return ResponseTrait::responseJSON($objects);
+    }
     public function getByMood($mood)
     {
         $capsules = CapsuleService::getByMood($mood);
         return ResponseTrait::responseJSON($capsules);
     }
-
     public function getByCountry($country)
     {
         $capsules = CapsuleService::getByCountry($country);
@@ -34,29 +37,22 @@ class CapsuleController extends Controller
         $capsules = CapsuleService::getByIp($ip);
         return ResponseTrait::responseJSON($capsules);
     }
-
-
     public function getPending($user_id)
     {
         $capsules = CapsuleService::getPending($user_id);
         return ResponseTrait::responseJSON($capsules);
 
     }
-
-
     public function getRevealed($user_id)
     {
         $capsules = CapsuleService::getRevealed($user_id);
         return ResponseTrait::responseJSON($capsules);
     }
-
-
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
         $capsule = CapsuleService::createOrUpdateCapsule($request, $id);
         return ResponseTrait::responseJSON($capsule);
     }
-
     public function deleteAll($user_id, $id = null)
     {
         $deleted = CapsuleService::deleteCapsules($user_id, $id);

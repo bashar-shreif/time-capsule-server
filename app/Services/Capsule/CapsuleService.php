@@ -4,12 +4,19 @@ namespace App\Services\Capsule;
 use App\Models\Capsule;
 use App\Models\Mood;
 use App\Services\ModelService;
+use App\Traits\LocationTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 
 class CapsuleService
 {
+    static function getAllOnMap()
+    {
+        $capsules = Capsule::all();
+
+        return $capsules;
+    }
 
     static function getByMood($mood_name)
     {
@@ -40,10 +47,11 @@ class CapsuleService
 
     static function createOrUpdateCapsule(Request $request, $id = null)
     {
-        $mood = Mood::where('mood', $request["mood"])->first();
-        $request['mood_id'] = $mood->id;
+        $location = LocationTrait::getLocation($request["ip_address"]);
+        $request['mood_id'] = ModelService::getId("Mood", $request["mood"]);
         $capsule = $id ? Capsule::find($id)->update($request->all()) :
             Capsule::create($request->all());
+            
         return $capsule;
     }
 

@@ -13,10 +13,10 @@ return new class extends Migration {
         Schema::create('capsules', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->integer('location_id');
             $table->integer('privacy_settings_id');
             $table->integer('reveal_mode_id');
             $table->integer('mood_id');
-            $table->integer('country_id');
             $table->text('message');
             $table->timestamps();
             $table->timestamp('revealed_at')->nullable();
@@ -26,10 +26,23 @@ return new class extends Migration {
             $table->string('mood')->unique();
             $table->timestamps();
         });
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('country');
+            $table->string('countryName');
+            $table->string('countryCode');
+            $table->string('regionCode');
+            $table->string('regionName');
+            $table->string('cityName');
+            $table->string('zipCode');
+            $table->string('isoCode');
+            $table->float('latitude');
+            $table->float('longitude');
+            $table->string('metroCode');
+            $table->integer('areaCode');
+            $table->string('timezone');
             $table->timestamps();
+
         });
         Schema::create('reveal_modes', function (Blueprint $table) {
             $table->id();
