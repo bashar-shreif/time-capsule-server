@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             CapsuleSeeder::class,
             MoodSeeder::class,
-            CountrySeeder::class
         ]);
     }
 }

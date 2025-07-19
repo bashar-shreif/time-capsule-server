@@ -26,7 +26,6 @@ class CapsuleFactory extends Factory
             'privacy_settings_id' => 1,
             'reveal_mode_id' => 1,
             'mood_id' => Mood::factory(),
-            'country_id' => Country::factory(),
             'message' => $this->faker->paragraph(3),
             'revealed_at' => $this->faker->optional()->dateTime,
         ];
