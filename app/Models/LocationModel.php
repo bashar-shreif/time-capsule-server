@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Capsule;
 
 
-class Location extends Model
+class LocationModel extends Model
 {
     use HasFactory;
     protected $fillable = [

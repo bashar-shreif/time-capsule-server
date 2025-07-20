@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Services\Capsule;
+use App\Services\Common\MediaService;
 use App\Models\Capsule;
 use App\Models\Mood;
-use App\Services\ModelService;
+use App\Services\Location\LocationService;
+use App\Services\Common\ModelService;
 use App\Traits\LocationTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -14,7 +16,6 @@ class CapsuleService
     static function getAllOnMap()
     {
         $capsules = Capsule::all();
-
         return $capsules;
     }
 
@@ -23,11 +24,16 @@ class CapsuleService
         $mood = Mood::where("mood", $mood_name)->first();
         return Capsule::whereBelongsTo($mood)->get();
     }
-    static function getByCountry($country_name)
+    static function getSurprise($user_id)
     {
-        $country = Mood::where("country", $country_name)->first();
-        return Capsule::whereBelongsTo($country)->get();
+        return Capsule::where("user_id", $user_id)
+            ->where("reveal_mode_id", 2);
     }
+    // static function getByCountry($country_name)
+    // {
+    //     $location = LocationModel::where("country_name", $country_name);
+    //     return Capsule::whereBelongsTo($location)->get();
+    // }
     static function getByIp($ip)
     {
         return Capsule::where('ip_address', $ip)->get();
@@ -47,11 +53,24 @@ class CapsuleService
 
     static function createOrUpdateCapsule(Request $request, $id = null)
     {
-        $location = LocationTrait::getLocation($request["ip_address"]);
-        $request['mood_id'] = ModelService::getId("Mood", $request["mood"]);
-        $capsule = $id ? Capsule::find($id)->update($request->all()) :
-            Capsule::create($request->all());
-            
+        if ($id)
+            return Capsule::find($id)->update($request->all());
+        $media = MediaService::addMedia($request->input('base64'));
+        $position = LocationTrait::getLocation($request->input('ip_address'));
+        $location = $position ? LocationService::addLocation($position) : null;
+        $request["location_id"] = $location ? $location->id : 0;
+        $capsule = Capsule::create($request->only([
+            'user_id',
+            'location_id',
+            'privacy_settings_id',
+            'reveal_mode_id',
+            'mood_id',
+            'message',
+            'color',
+            'background',
+            'ip_address',
+            'revealed_at'
+        ]));
         return $capsule;
     }
 

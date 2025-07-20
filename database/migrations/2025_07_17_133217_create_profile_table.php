@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('profile', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('pfp_base64');
-            $table->string('pbg_base64');
+            $table->string('pfp_url');
+            $table->string('pbg_url');
             $table->timestamps();
         });
     }

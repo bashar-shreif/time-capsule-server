@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TagSeeder::class,
             CapsuleSeeder::class,
-            MoodSeeder::class,
         ]);
     }
 }

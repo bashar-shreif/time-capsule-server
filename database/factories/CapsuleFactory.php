@@ -25,9 +25,11 @@ class CapsuleFactory extends Factory
             'user_id' => User::factory(),
             'privacy_settings_id' => 1,
             'reveal_mode_id' => 1,
-            'mood_id' => Mood::factory(),
+            'mood_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+            'location_id' => 0,
             'message' => $this->faker->paragraph(3),
             'revealed_at' => $this->faker->optional()->dateTime,
+            'ip_address' => $this->faker->ipv4,
         ];
     }
 }
