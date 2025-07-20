@@ -18,4 +18,13 @@ class ProfileController extends Controller
         $user->update(["pfp_url" => $image]);
         return ResponseTrait::responseJSON($user);
     }
+
+    public static function addOrUpdateProfileBackground(Request $request, $user_id)
+    {
+        $base64 = $request->input("base64");
+        $image = MediaService::addMedia($base64, "", $user_id . "pbg");
+        $user = User::findOrFail($user_id);
+        $user->update(["pbg_url" => $image]);
+        return ResponseTrait::responseJSON($user);
+    }
 }
