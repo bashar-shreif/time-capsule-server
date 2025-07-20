@@ -3,15 +3,17 @@ namespace App\Services\Common;
 
 class MediaService
 {
-    public static function addMedia($base64, $capsule_id)
+    public static function addMedia($base64, $capsule_id = "", $name)
     {
         $type = MediaService::getBase64Type($base64);
         $directory = MediaService::getFolder($type);
         $parts = explode(",", $base64, 2);
-        $output_file = storage_path("app/public/media/" . $directory."file_for_capsule_".$capsule_id);
+        $output_file = storage_path("app/public/media/" . $directory."/file_for_".$name.$capsule_id);
         $data = base64_decode(str($parts[1]));
 
-        return file_put_contents($output_file, $data) ? $output_file : null;
+        file_put_contents($output_file, $data);
+        return $output_file;
+
     }
     public static function getFolder($raw_path)
     {

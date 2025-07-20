@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Capsule\CapsuleController;
 use App\Http\Controllers\Common\AuthController;
+use App\Http\Controllers\User\ProfileController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -28,29 +29,26 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get("/ip/{ip}", [CapsuleController::class, "getByIp"]); //get capsules with a certain ip
         Route::get("/time_range/{time_range}", [CapsuleController::class, ""]); // get capsules in certain time range
 
-        Route::get("", [CapsuleController::class, ""]); //get link to share a capsule
-
         Route::post("/add_update/{id?}", [CapsuleController::class, 'addOrUpdateCapsule']); //add a capsule, and update if a capsule id is set
         Route::post("/delete/{user_id}/{id?}", [CapsuleController::class, 'deleteAll']); //delete a capsule for the user or delete all capsules
-        Route::post('', [CapsuleController::class, '']); //reveal a capsule
+        Route::post('/reveal_capsule', [CapsuleController::class, 'revealCapsule']); //reveal a capsule
 
 
         // //Export api's
-        // Route::post("/export/{id}", []);
+        Route::post("/export/{id}", []);
 
 
-        Route::group(["prefix" => "upload"], function () {
-            Route::post("/image/{capsule_id}", []);
-            Route::post("/audio/{capsule_id}", []);
-            Route::post("/bg/{capsule_id}", []);
-            Route::post("/color/{capsule_id}", []);
-        });
+        // Route::group(["prefix" => "upload"], function () {
+        //     Route::post("/image/{capsule_id}", []);
+        //     Route::post("/audio/{capsule_id}", []);
+        //     Route::post("/bg/{capsule_id}", []);
+        //     Route::post("/color/{capsule_id}", []);
+        // });
+
         //Profile routes
         Route::group(["prefix" => "profile"], function () {
-            Route::group(["prefix" => "profile"], function () {
-                // Route::post("/pbg/{profile_id}", []);
-                // Route::post("/pfp/{profile_id}", []);
-            });
+            Route::post("/pbg/{user_id}", [ProfileController::class, "addOrUpdateProfileBackground"]);
+            Route::post("/pfp/{user_id}", [ProfileController::class, "addOrUpdateProfilePicture"]);
         });
 
         // });
