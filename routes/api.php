@@ -34,11 +34,23 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post("/delete/{user_id}/{id?}", [CapsuleController::class, 'deleteAll']); //delete a capsule for the user or delete all capsules
         Route::post('', [CapsuleController::class, '']); //reveal a capsule
 
+
+        // //Export api's
+        // Route::post("/export/{id}", []);
+
+
         Route::group(["prefix" => "upload"], function () {
             Route::post("/image/{capsule_id}", []);
             Route::post("/audio/{capsule_id}", []);
             Route::post("/bg/{capsule_id}", []);
             Route::post("/color/{capsule_id}", []);
+        });
+        //Profile routes
+        Route::group(["prefix" => "profile"], function () {
+            Route::group(["prefix" => "profile"], function () {
+                // Route::post("/pbg/{profile_id}", []);
+                // Route::post("/pfp/{profile_id}", []);
+            });
         });
 
         // });
@@ -49,18 +61,6 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::post("/register", [AuthController::class, "register"]);
     });
 
-    //Profile routes
-    Route::group(["prefix" => "profile"], function () {
-        Route::group(["prefix" => "profile"], function () {
-            // Route::post("/pbg/{profile_id}", []);
-            // Route::post("/pfp/{profile_id}", []);
-        });
-
-    });
-
 });
 
 
-
-// //Export api's
-// Route::post("/export/{id}", []);

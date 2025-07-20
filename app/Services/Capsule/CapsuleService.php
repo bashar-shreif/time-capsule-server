@@ -69,6 +69,7 @@ class CapsuleService
             'revealed_at'
         ]));
         $media = MediaService::addMedia($request->input('base64'), $capsule->id);
+        $capsule->media_url = $media;
 
         return $capsule;
     }
