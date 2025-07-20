@@ -51,11 +51,8 @@ class CapsuleService
             ->get();
     }
 
-    static function createOrUpdateCapsule(Request $request, $id = null)
+    static function createCapsule(Request $request, $id = null)
     {
-        if ($id)
-            return Capsule::find($id)->update($request->all());
-        $media = MediaService::addMedia($request->input('base64'));
         $position = LocationTrait::getLocation($request->input('ip_address'));
         $location = $position ? LocationService::addLocation($position) : null;
         $request["location_id"] = $location ? $location->id : 0;
@@ -71,7 +68,13 @@ class CapsuleService
             'ip_address',
             'revealed_at'
         ]));
+        $media = MediaService::addMedia($request->input('base64'), $capsule->id);
+
         return $capsule;
+    }
+    static function updateCapsule(Request $request, $id)
+    {
+        return Capsule::find($id)->update($request->all());
     }
 
     static function deleteCapsules($user_id, $id = null)

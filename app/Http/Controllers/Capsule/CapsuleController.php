@@ -58,7 +58,15 @@ class CapsuleController extends Controller
     }
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
-        $capsule = CapsuleService::createOrUpdateCapsule($request, $id);
+
+        
+        if ($id) {
+            $capsule = CapsuleService::updateCapsule($request, $id);
+            return ResponseTrait::responseJSON($capsule);
+        }
+
+
+        $capsule = CapsuleService::createCapsule($request, $id);
         return ResponseTrait::responseJSON($capsule);
     }
     public function deleteAll($user_id, $id = null)
