@@ -9,6 +9,7 @@ use App\Services\Common\ModelService;
 use App\Traits\LocationTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use App\Models\LocationModel;
 
 
 class CapsuleService
@@ -82,5 +83,12 @@ class CapsuleService
         else
             Capsule::where('user_id', $user_id)->delete();
         return $capsule;
+    }
+    static function getByCountry($country)
+    {
+        $locations = LocationModel::where('country_name', $country)->get();
+        $location_ids = $locations->pluck('id')->toArray();
+        $capsules = Capsule::where('location_id', $location_ids)->get();
+        return $capsules;
     }
 }

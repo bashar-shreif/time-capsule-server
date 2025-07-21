@@ -30,21 +30,16 @@ class CapsuleController extends Controller
         $capsules = CapsuleService::getByMood($mood);
         return ResponseTrait::responseJSON($capsules);
     }
-    // public function getByCountry($country)
-    // {
-    //     $capsules = CapsuleService::getByCountry($country);
-    //     return ResponseTrait::responseJSON($capsules);
-    // }
+    public function getByCountry($country)
+    {
+        $capsules = CapsuleService::getByCountry($country);
+        return ResponseTrait::responseJSON($capsules);
+    }
     public function getByIp($ip)
     {
         $capsules = CapsuleService::getByIp($ip);
         return ResponseTrait::responseJSON($capsules);
     }
-    // public function getSurprise()
-    // {
-    //     $capsules = CapsuleService::getSurprise();
-    //     return ResponseTrait::responseJSON($capsules);
-    // }
     public function getPending($user_id)
     {
         $capsules = CapsuleService::getPending($user_id);

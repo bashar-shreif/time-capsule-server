@@ -26,7 +26,7 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get("/surprise/{user_id}", [CapsuleController::class, "getSurprise"]); //get capsules in surprise mode
 
         Route::get("/mood/{mood}", [CapsuleController::class, "getByMood"]); //get capsules in a certain mood
-        //Route::get("/country/{country}", [CapsuleController::class, "getByCountry"]); //get capsules in a certain country
+        Route::get("/country/{country}", [CapsuleController::class, "getByCountry"]); //get capsules in a certain country
         Route::get("/ip/{ip}", [CapsuleController::class, "getByIp"]); //get capsules with a certain ip
         Route::get("/time_range/{time_range}", [CapsuleController::class, ""]); // get capsules in certain time range
 
@@ -38,13 +38,6 @@ Route::group(["prefix" => "v0.1"], function () {
         // //Export api's
         Route::get("/export/{capsule_id}", [ZipController::class,"exportZip"]);
 
-
-        // Route::group(["prefix" => "upload"], function () {
-        //     Route::post("/image/{capsule_id}", []);
-        //     Route::post("/audio/{capsule_id}", []);
-        //     Route::post("/bg/{capsule_id}", []);
-        //     Route::post("/color/{capsule_id}", []);
-        // });
 
         //Profile routes
         Route::group(["prefix" => "profile"], function () {
