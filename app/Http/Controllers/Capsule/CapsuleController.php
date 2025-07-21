@@ -30,21 +30,16 @@ class CapsuleController extends Controller
         $capsules = CapsuleService::getByMood($mood);
         return ResponseTrait::responseJSON($capsules);
     }
-    // public function getByCountry($country)
-    // {
-    //     $capsules = CapsuleService::getByCountry($country);
-    //     return ResponseTrait::responseJSON($capsules);
-    // }
+    public function getByCountry($country)
+    {
+        $capsules = CapsuleService::getByCountry($country);
+        return ResponseTrait::responseJSON($capsules);
+    }
     public function getByIp($ip)
     {
         $capsules = CapsuleService::getByIp($ip);
         return ResponseTrait::responseJSON($capsules);
     }
-    // public function getSurprise()
-    // {
-    //     $capsules = CapsuleService::getSurprise();
-    //     return ResponseTrait::responseJSON($capsules);
-    // }
     public function getPending($user_id)
     {
         $capsules = CapsuleService::getPending($user_id);
@@ -59,7 +54,7 @@ class CapsuleController extends Controller
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
 
-        
+
         if ($id) {
             $capsule = CapsuleService::updateCapsule($request, $id);
             return ResponseTrait::responseJSON($capsule);
@@ -73,5 +68,10 @@ class CapsuleController extends Controller
     {
         $deleted = CapsuleService::deleteCapsules($user_id, $id);
         return ResponseTrait::responseJSON($deleted);
+    }
+    public function getSurprise($user_id)
+    {
+        $capsules = CapsuleService::getSurprise($user_id);
+        return ResponseTrait::responseJSON($capsules);
     }
 }

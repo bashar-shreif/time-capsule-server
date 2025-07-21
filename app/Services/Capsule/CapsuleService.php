@@ -9,6 +9,7 @@ use App\Services\Common\ModelService;
 use App\Traits\LocationTrait;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use App\Models\LocationModel;
 
 
 class CapsuleService
@@ -26,14 +27,10 @@ class CapsuleService
     }
     static function getSurprise($user_id)
     {
-        return Capsule::where("user_id", $user_id)
-            ->where("reveal_mode_id", 2);
+        return Capsule::where("reveal_mode_id", 2)
+            ->where("user_id", $user_id)
+            ->get();
     }
-    // static function getByCountry($country_name)
-    // {
-    //     $location = LocationModel::where("country_name", $country_name);
-    //     return Capsule::whereBelongsTo($location)->get();
-    // }
     static function getByIp($ip)
     {
         return Capsule::where('ip_address', $ip)->get();
@@ -86,5 +83,12 @@ class CapsuleService
         else
             Capsule::where('user_id', $user_id)->delete();
         return $capsule;
+    }
+    static function getByCountry($country)
+    {
+        $locations = LocationModel::where('country_name', $country)->get();
+        $location_ids = $locations->pluck('id')->toArray();
+        $capsules = Capsule::where('location_id', $location_ids)->get();
+        return $capsules;
     }
 }
