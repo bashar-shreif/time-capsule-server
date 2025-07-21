@@ -26,14 +26,10 @@ class CapsuleService
     }
     static function getSurprise($user_id)
     {
-        return Capsule::where("user_id", $user_id)
-            ->where("reveal_mode_id", 2);
+        return Capsule::where("reveal_mode_id", 2)
+            ->where("user_id", $user_id)
+            ->get();
     }
-    // static function getByCountry($country_name)
-    // {
-    //     $location = LocationModel::where("country_name", $country_name);
-    //     return Capsule::whereBelongsTo($location)->get();
-    // }
     static function getByIp($ip)
     {
         return Capsule::where('ip_address', $ip)->get();

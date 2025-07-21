@@ -23,7 +23,7 @@ Route::group(["prefix" => "v0.1"], function () {
         Route::get("/user/{id}", [CapsuleController::class, "getByUserId"]); //get capsules of a certain user
         Route::get("/revealed/{user_id}", [CapsuleController::class, "getRevealed"]); //get revealed capsules of a user
         Route::get("/pending/{user_id}", [CapsuleController::class, "getPending"]); //get pending capsules of a user
-        // Route::get("/surprise", [CapsuleController::class, "getSurprise"]); //get capsules in surprise mode
+        Route::get("/surprise/{user_id}", [CapsuleController::class, "getSurprise"]); //get capsules in surprise mode
 
         Route::get("/mood/{mood}", [CapsuleController::class, "getByMood"]); //get capsules in a certain mood
         //Route::get("/country/{country}", [CapsuleController::class, "getByCountry"]); //get capsules in a certain country
