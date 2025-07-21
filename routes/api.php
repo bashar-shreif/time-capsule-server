@@ -1,48 +1,58 @@
 <?php
 
+use App\Http\Controllers\Common\ZipController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Capsule\CapsuleController;
+use App\Http\Controllers\Common\AuthController;
+use App\Http\Controllers\User\ProfileController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
 
+Route::group(["prefix" => "v0.1"], function () {
+    //Capsule routes
+    // Route::group(["middleware" => "auth:api"], function () {
 
-//User routes
-Route::post("/edit_user/{id}", []);
-Route::post("/delete_user/{id}", []);
-Route::get("/get_user/{id}", []);
-Route::get("/get_users", []);
-Route::post("/register", []);
-Route::post("/login", []);
-Route::get("/profile", []);
-Route::post("/logout", []);
+    Route::group(["prefix" => "user"], function () {
+        Route::get("/all/{id?}", [CapsuleController::class, "getAll"]); //get all capsules, and gets one capsule if an id is set
+        Route::get("/map", [CapsuleController::class, "getAllOnMap"]); //get capsules with their locations
 
+        Route::get("/user/{id}", [CapsuleController::class, "getByUserId"]); //get capsules of a certain user
+        Route::get("/revealed/{user_id}", [CapsuleController::class, "getRevealed"]); //get revealed capsules of a user
+        Route::get("/pending/{user_id}", [CapsuleController::class, "getPending"]); //get pending capsules of a user
+        Route::get("/surprise/{user_id}", [CapsuleController::class, "getSurprise"]); //get capsules in surprise mode
 
-//Capsule routes
-Route::get("/get_capsule/{id}", []);
+        Route::get("/mood/{mood}", [CapsuleController::class, "getByMood"]); //get capsules in a certain mood
+        Route::get("/country/{country}", [CapsuleController::class, "getByCountry"]); //get capsules in a certain country
+        Route::get("/ip/{ip}", [CapsuleController::class, "getByIp"]); //get capsules with a certain ip
+        Route::get("/time_range/{time_range}", [CapsuleController::class, ""]); // get capsules in certain time range
 
-Route::get("/get_all_capsules", action: []);
-Route::get("/get_personal_capsules", []);
-Route::get("/get_pending_capsules", []);
-Route::get("/get_revealed_capsules", []);
-
-Route::get("/get_capsules_by_mood/{mood_id}", []);
-Route::get("/get_capsules_by_country/{country_id}", []);
-
-Route::post("/reveal_capsule/{id}", []);
-Route::post("/add_update_capsule{id?}", []);
-Route::post("/delete_capsule/{id}", []);
-
-//Media routes
-Route::post("/upload/pbg/{profile_id}", []);
-Route::post("/upload/pfp/{profile_id}", []);
-Route::post("/upload/capsule/image/{capsule_id}", []);
-Route::post("/upload/capsule/audio/{capsule_id}", []);
-Route::post("/upload/capsule/bg/{capsule_id}", []);
-Route::post("/upload/capsule/color/{capsule_id}", []);
+        Route::post("/add_update/{id?}", [CapsuleController::class, 'addOrUpdateCapsule']); //add a capsule, and update if a capsule id is set
+        Route::post("/delete/{user_id}/{id?}", [CapsuleController::class, 'deleteAll']); //delete a capsule for the user or delete all capsules
+        Route::post('/reveal_capsule', [CapsuleController::class, 'revealCapsule']); //reveal a capsule
 
 
-//Export api's
-Route::post("/export/{id}", []);
+        // //Export api's
+        Route::get("/export/{capsule_id}", [ZipController::class,"exportZip"]);
+
+
+        //Profile routes
+        Route::group(["prefix" => "profile"], function () {
+            Route::post("/pbg/{user_id}", [ProfileController::class, "addOrUpdateProfileBackground"]);
+            Route::post("/pfp/{user_id}", [ProfileController::class, "addOrUpdateProfilePicture"]);
+        });
+
+        // });
+
+    });
+    Route::group(["prefix" => "guest"], function () {
+        Route::post("/login", [AuthController::class, "login"]);
+        Route::post("/register", [AuthController::class, "register"]);
+    });
+
+});
+
+

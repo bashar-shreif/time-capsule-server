@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::table('capsules', function (Blueprint $table) {
             $table->string("color")->after("message")->nullable()->default(null);
             $table->string("background")->after("color")->nullable()->default(null);
+            $table->string("ip_address")->after("background")->nullable()->default(null);
         });
     }
 
