@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\ZipController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Capsule\CapsuleController;
@@ -35,7 +36,7 @@ Route::group(["prefix" => "v0.1"], function () {
 
 
         // //Export api's
-        Route::post("/export/{id}", []);
+        Route::get("/export/{capsule_id}", [ZipController::class,"exportZip"]);
 
 
         // Route::group(["prefix" => "upload"], function () {
