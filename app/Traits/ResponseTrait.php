@@ -11,4 +11,8 @@ trait ResponseTrait
             "payload" => $payload
         ], $status_code);
     }
+    static function responseDownload($file_name)
+    {
+        response()->download(storage_path('app/public/zip/' . $file_name))->deleteFileAfterSend(true);
+    }
 }

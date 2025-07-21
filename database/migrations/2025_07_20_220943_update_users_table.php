@@ -4,19 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('profile', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->string('pfp_base64');
-            $table->string('pbg_base64');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string("pfp_url")->after("password")->nullable()->default(null);
+            $table->string("pbg_url")->after("pfp_url")->nullable()->default(null);
         });
     }
 
@@ -25,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profile');
+        //
     }
 };

@@ -18,29 +18,30 @@ return new class extends Migration {
             $table->integer('reveal_mode_id');
             $table->integer('mood_id');
             $table->text('message');
+            $table->string('media_url')->nullable();
             $table->timestamps();
-            $table->timestamp('revealed_at')->nullable();
+            $table->timestamp('revealed_at');
         });
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
             $table->string('mood')->unique();
             $table->timestamps();
         });
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('location_models', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
-            $table->string('countryName');
-            $table->string('countryCode');
-            $table->string('regionCode');
-            $table->string('regionName');
-            $table->string('cityName');
-            $table->string('zipCode');
-            $table->string('isoCode');
-            $table->float('latitude');
-            $table->float('longitude');
-            $table->string('metroCode');
-            $table->integer('areaCode');
-            $table->string('timezone');
+            $table->string('ip_address')->nullable();
+            $table->string('country_name')->nullable();
+            $table->string('country_code')->nullable();
+            $table->string('region_code')->nullable();
+            $table->string('region_name')->nullable();
+            $table->string('city_name')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('iso_code')->nullable();
+            $table->decimal('latitude', 10, 6)->nullable();
+            $table->decimal('longitude', 10, 6)->nullable();
+            $table->string('metro_code')->nullable();
+            $table->string('area_code')->nullable();
+            $table->string('timezone')->nullable();
             $table->timestamps();
 
         });

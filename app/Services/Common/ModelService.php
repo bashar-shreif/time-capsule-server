@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Common;
+
+use App\Models\Mood;
 
 class ModelService
 {
     static function getAll($id = null, $model)
     {
         return $id ? $model::find($id) : $model::all();
-    }
-    static function getId($model, $attribute)
-    {
-        $object = $model::where($attribute,"=", $model->$attribute)->first();
-        return $object ? $object->id : null;
     }
 }

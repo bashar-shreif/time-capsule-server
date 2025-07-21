@@ -16,6 +16,7 @@ class Capsule extends Model
         'mood_id',
         'country_id',
         'message',
+        'media_url',
         'ip_address',
         'color',
         'revealed_at',
@@ -35,6 +36,6 @@ class Capsule extends Model
     }
     public function location()
     {
-        return $this->belongsTo(Location::class, 'location_id', 'id');
+        return $this->belongsTo(LocationModel::class, 'location_id', 'id');
     }
 }
