@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Capsule;
+use App\Mail\CapsuleMail;
 use App\Services\Common\MediaService;
 use App\Models\Capsule;
 use App\Models\Mood;
@@ -16,14 +17,20 @@ class CapsuleService
 {
     static function getPublicWall()
     {
-        $caplsules = Capsule::where("privacy_settings_id", 1)->where("is_revealed",1)->get();
-        return $caplsules;
+        $capsules = Capsule::where("privacy_settings_id", 1)->where("is_revealed", 1)->get();
+        return $capsules;
     }
     static function getAllOnMap()
     {
-        $capsules = Capsule::all();
+        $capsules = Capsule::with('location') // eager load location
+            ->where("privacy_settings_id", 1)
+            ->where("is_revealed", 1)
+            ->where('location_id', ">", 0)
+            ->get();
+
         return $capsules;
     }
+
 
     static function getByMood($mood_name)
     {
@@ -53,6 +60,9 @@ class CapsuleService
             ->get();
         foreach ($capsules as $capsule) {
             $capsule->update(['is_revealed' => true]);
+            if ($capsule->user && filter_var($capsule->user->email, FILTER_VALIDATE_EMAIL)) {
+                \Mail::to($capsule->user->email)->send(new CapsuleMail($capsule));
+            }
         }
         return $capsules;
     }

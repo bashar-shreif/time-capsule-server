@@ -12,7 +12,7 @@ use App\Http\Controllers\User\UserController;
 
 Route::group(["prefix" => "v0.1"], function () {
     //Capsule routes
-    Route::group(["middleware" => "auth:api"], function () {
+    // Route::group(["middleware" => "auth:api"], function () {
 
         Route::group(["prefix" => "user"], function () {
 
@@ -49,7 +49,7 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::get("/get/{id}", [ProfileController::class, "getProfile"]);
             });
 
-        });
+        // });
 
     });
     Route::group(["prefix" => "guest"], function () {
