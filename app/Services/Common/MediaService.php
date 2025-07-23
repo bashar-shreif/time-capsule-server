@@ -5,14 +5,20 @@ class MediaService
 {
     public static function addMedia($base64, $capsule_id = "", $name)
     {
-        $type = MediaService::getBase64Type($base64);
-        $directory = MediaService::getFolder($type);
+        $mimeType = MediaService::getBase64MimeType($base64); // new helper
+        $directory = MediaService::getFolder($mimeType);
         $parts = explode(",", $base64, 2);
-        $output_file = storage_path("app/public/media/" . $directory."/file_for_".$name.$capsule_id);
-        $data = base64_decode(str($parts[1]));
 
-        file_put_contents($output_file, $data);
-        return $output_file;
+        $extension = explode('/', $mimeType)[1] ?? 'bin';
+        $fileName = "file_for_" . $name . $capsule_id . "." . $extension;
+        $relativePath = "media/" . $directory . $fileName;
+
+        $outputPath = storage_path("app/public/" . $relativePath);
+
+        $data = base64_decode($parts[1]);
+        file_put_contents($outputPath, $data);
+
+        return "/storage/" . $relativePath;
 
     }
     public static function getFolder($raw_path)
@@ -39,6 +45,14 @@ class MediaService
 
         return null;
     }
+    public static function getBase64MimeType(string $base64)
+    {
+        if (preg_match('/^data:(.*);base64,/', $base64, $matches)) {
+            return $matches[1];
+        }
+        return 'application/octet-stream';
+    }
+
 }
 
 

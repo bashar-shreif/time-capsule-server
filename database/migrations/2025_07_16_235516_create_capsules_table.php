@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->text('message');
             $table->string('media_url')->nullable();
             $table->timestamps();
-            $table->timestamp('revealed_at');
+            $table->timestamp('revealed_at')->useCurrent();
         });
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
