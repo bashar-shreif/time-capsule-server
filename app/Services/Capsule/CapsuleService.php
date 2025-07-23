@@ -14,6 +14,11 @@ use App\Models\LocationModel;
 
 class CapsuleService
 {
+    static function getPublicWall()
+    {
+        $caplsules = Capsule::where("privacy_settings_id", 1)->where("is_revealed",1)->get();
+        return $caplsules;
+    }
     static function getAllOnMap()
     {
         $capsules = Capsule::all();

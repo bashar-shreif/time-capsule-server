@@ -16,11 +16,11 @@ Route::group(["prefix" => "v0.1"], function () {
 
         Route::group(["prefix" => "user"], function () {
 
-            Route::get("/get_profile/{id}", [ProfileController::class, "getProfile"]); //gets a user of an id
-
 
             Route::get("/all/{id?}", [CapsuleController::class, "getAll"]); //get all capsules, and gets one capsule if an id is set
             Route::get("/map", [CapsuleController::class, "getAllOnMap"]); //get capsules with their locations
+
+            Route::get("/public_wall", [CapsuleController::class, "getPublicWall"]); //get capsules of a public wall
 
             Route::get("/user/{id}", [CapsuleController::class, "getByUserId"]); //get capsules of a certain user
             Route::get("/revealed/{user_id}", [CapsuleController::class, "getRevealed"]); //get revealed capsules of a user
@@ -46,6 +46,7 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::post("/pbg/{user_id}", [ProfileController::class, "addOrUpdateProfileBackground"]);
                 Route::post("/pfp/{user_id}", [ProfileController::class, "addOrUpdateProfilePicture"]);
                 Route::post("/name/{user_id}", [ProfileController::class, "updateName"]);
+                Route::get("/get/{id}", [ProfileController::class, "getProfile"]);
             });
 
         });

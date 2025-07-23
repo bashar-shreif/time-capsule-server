@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Capsule;
 use App\Services\Location\LocationService;
 use App\Services\Common\ModelService;
 use App\Traits\LocationTrait;
+use Exception;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Common\Controller;
@@ -14,61 +15,111 @@ use App\Models\Capsule;
 class CapsuleController extends Controller
 {
     protected static string $model = Capsule::class;
+    public static function getPublicWall()
+    {
+        try {
+
+            $wall = CapsuleService::getPublicWall();
+            return ResponseTrait::responseJSON($wall);
+
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
+    }
     public static function getByUserId($user_id)
     {
-        $pending = CapsuleService::getPending($user_id);
-        $revealed = CapsuleService::getRevealed($user_id);
-        return ResponseTrait::responseJSON(['pending' => $pending, 'revealed' => $revealed]);
+        try {
+            $pending = CapsuleService::getPending($user_id);
+            $revealed = CapsuleService::getRevealed($user_id);
+            return ResponseTrait::responseJSON(['pending' => $pending, 'revealed' => $revealed]);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     static function getAllOnMap()
     {
-        $capsules = ModelService::getAll(null, Capsule::class);
-        $capsules = LocationService::attachLocations($capsules);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = ModelService::getAll(null, Capsule::class);
+            $capsules = LocationService::attachLocations($capsules);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getByMood($mood)
     {
-        $capsules = CapsuleService::getByMood($mood);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getByMood($mood);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getByCountry($country)
     {
-        $capsules = CapsuleService::getByCountry($country);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getByCountry($country);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getByIp($ip)
     {
-        $capsules = CapsuleService::getByIp($ip);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getByIp($ip);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getPending($user_id)
     {
-        $capsules = CapsuleService::getPending($user_id);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getPending($user_id);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getRevealed($user_id)
     {
-        $capsules = CapsuleService::getRevealed($user_id);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getRevealed($user_id);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
-        if ($id) {
-            $capsule = CapsuleService::updateCapsule($request, $id);
+        try {
+            if ($id) {
+                $capsule = CapsuleService::updateCapsule($request, $id);
+                return ResponseTrait::responseJSON($capsule);
+            }
+            $capsule = CapsuleService::createCapsule($request, $id);
             return ResponseTrait::responseJSON($capsule);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
         }
-
-        $capsule = CapsuleService::createCapsule($request, $id);
-        return ResponseTrait::responseJSON($capsule);
     }
     public function deleteAll($user_id, $id = null)
     {
-        $deleted = CapsuleService::deleteCapsules($user_id, $id);
-        return ResponseTrait::responseJSON($deleted);
+        try {
+            $deleted = CapsuleService::deleteCapsules($user_id, $id);
+            return ResponseTrait::responseJSON($deleted);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
     public function getSurprise($user_id)
     {
-        $capsules = CapsuleService::getSurprise($user_id);
-        return ResponseTrait::responseJSON($capsules);
+        try {
+            $capsules = CapsuleService::getSurprise($user_id);
+            return ResponseTrait::responseJSON($capsules);
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
     }
 }
