@@ -39,8 +39,7 @@ class CapsuleController extends Controller
     static function getAllOnMap()
     {
         try {
-            $capsules = ModelService::getAll(null, Capsule::class);
-            $capsules = LocationService::attachLocations($capsules);
+            $capsules = CapsuleService::getAllOnMap();
             return ResponseTrait::responseJSON($capsules);
         } catch (Exception $e) {
             return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
