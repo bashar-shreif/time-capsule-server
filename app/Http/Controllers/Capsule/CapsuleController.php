@@ -15,6 +15,17 @@ use App\Models\Capsule;
 class CapsuleController extends Controller
 {
     protected static string $model = Capsule::class;
+    public static function getPublicWall()
+    {
+        try {
+
+            $wall = CapsuleService::getPublicWall();
+            return ResponseTrait::responseJSON($wall);
+
+        } catch (Exception $e) {
+            return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+        }
+    }
     public static function getByUserId($user_id)
     {
         try {

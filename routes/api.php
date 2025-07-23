@@ -20,6 +20,8 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("/all/{id?}", [CapsuleController::class, "getAll"]); //get all capsules, and gets one capsule if an id is set
             Route::get("/map", [CapsuleController::class, "getAllOnMap"]); //get capsules with their locations
 
+            Route::get("/public_wall", [CapsuleController::class, "getPublicWall"]); //get capsules of a public wall
+
             Route::get("/user/{id}", [CapsuleController::class, "getByUserId"]); //get capsules of a certain user
             Route::get("/revealed/{user_id}", [CapsuleController::class, "getRevealed"]); //get revealed capsules of a user
             Route::get("/pending/{user_id}", [CapsuleController::class, "getPending"]); //get pending capsules of a user
