@@ -10,7 +10,7 @@ use App\Traits\ResponseTrait;
 use App\Http\Controllers\Common\Controller;
 use App\Services\Capsule\CapsuleService;
 use App\Models\Capsule;
-
+use App\Services\Common\FilterService;
 
 class CapsuleController extends Controller
 {
@@ -121,4 +121,15 @@ class CapsuleController extends Controller
             return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
         }
     }
+
+    public static function getFilterOptions()
+{
+    try {
+        $filterOptions = FilterService::getFilterOptions();
+        return ResponseTrait::responseJSON($filterOptions);
+    } catch (Exception $e) {
+        return ResponseTrait::responseJSON(null, $e->getMessage(), 500);
+    }
+}
+
 }

@@ -27,6 +27,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::get("/pending/{user_id}", [CapsuleController::class, "getPending"]); //get pending capsules of a user
             Route::get("/surprise/{user_id}", [CapsuleController::class, "getSurprise"]); //get capsules in surprise mode
 
+            Route::get("/filter_options", [CapsuleController::class, "getFilterOptions"]); // get filter options for dropdowns
             Route::get("/mood/{mood}", [CapsuleController::class, "getByMood"]); //get capsules in a certain mood
             Route::get("/country/{country}", [CapsuleController::class, "getByCountry"]); //get capsules in a certain country
             Route::get("/ip/{ip}", [CapsuleController::class, "getByIp"]); //get capsules with a certain ip
@@ -36,7 +37,7 @@ Route::group(["prefix" => "v0.1"], function () {
             Route::post("/delete/{user_id}/{id?}", [CapsuleController::class, 'deleteAll']); //delete a capsule for the user or delete all capsules
             Route::post('/reveal_capsule', [CapsuleController::class, 'revealCapsule']); //reveal a capsule
 
-
+            
             // //Export api's
             Route::get("/export/{capsule_id}", [ZipController::class, "exportZip"]);
 
@@ -48,7 +49,7 @@ Route::group(["prefix" => "v0.1"], function () {
                 Route::post("/name/{user_id}", [ProfileController::class, "updateName"]);
                 Route::get("/get/{id}", [ProfileController::class, "getProfile"]);
             });
-
+            
         // });
 
     });
