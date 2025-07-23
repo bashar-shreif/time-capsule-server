@@ -19,6 +19,8 @@
 /storage/*.key
 /storage/pail
 /vendor
+/php83-cli-static-bin
+php83-cli-static-bin
 Homestead.json
 Homestead.yaml
 Thumbs.db

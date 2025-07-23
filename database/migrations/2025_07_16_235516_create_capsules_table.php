@@ -13,23 +13,37 @@ return new class extends Migration {
         Schema::create('capsules', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->integer('location_id');
             $table->integer('privacy_settings_id');
             $table->integer('reveal_mode_id');
             $table->integer('mood_id');
-            $table->integer('country_id');
             $table->text('message');
+            $table->string('media_url')->nullable();
             $table->timestamps();
-            $table->timestamp('revealed_at');
+            $table->timestamp('revealed_at')->useCurrent();
         });
         Schema::create('moods', function (Blueprint $table) {
             $table->id();
-            $table->string('mood');
+            $table->string('mood')->unique();
             $table->timestamps();
         });
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('location_models', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
+            $table->string('ip_address')->nullable();
+            $table->string('country_name')->nullable();
+            $table->string('country_code')->nullable();
+            $table->string('region_code')->nullable();
+            $table->string('region_name')->nullable();
+            $table->string('city_name')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('iso_code')->nullable();
+            $table->decimal('latitude', 10, 6)->nullable();
+            $table->decimal('longitude', 10, 6)->nullable();
+            $table->string('metro_code')->nullable();
+            $table->string('area_code')->nullable();
+            $table->string('timezone')->nullable();
             $table->timestamps();
+
         });
         Schema::create('reveal_modes', function (Blueprint $table) {
             $table->id();
@@ -43,7 +57,7 @@ return new class extends Migration {
         });
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('tags');
+            $table->string('tag');
             $table->timestamps();
         });
     }
