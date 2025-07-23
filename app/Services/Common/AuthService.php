@@ -12,7 +12,7 @@ class AuthService
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
@@ -31,10 +31,10 @@ class AuthService
     static function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         $token = Auth::attempt($credentials);
         if (!$token)
@@ -42,6 +42,22 @@ class AuthService
 
         $user = Auth::user();
         $user->token = $token;
+        return $user;
+    }
+
+    public static function updateUser($user_id, $data)
+    {
+        $user = \App\Models\User::findOrFail($user_id);
+        if (isset($data['name'])) {
+            $user->name = $data['name'];
+        }
+        if (isset($data['pfp_url'])) {
+            $user->pfp_url = $data['pfp_url'];
+        }
+        if (isset($data['pbg_url'])) {
+            $user->pbg_url = $data['pbg_url'];
+        }
+        $user->save();
         return $user;
     }
 }

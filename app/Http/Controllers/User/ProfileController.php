@@ -27,4 +27,27 @@ class ProfileController extends Controller
         $user->update(["pbg_url" => $image]);
         return ResponseTrait::responseJSON($user);
     }
+
+    public static function getProfile($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $res = [
+            'profile' => $user->pfp_url,
+            'background' => $user->pbg_url,
+            'name' => $user->name,
+        ];
+        return ResponseTrait::responseJSON($res);
+    }
+
+    public static function updateName(Request $request, $user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $user->update(['name' => $request->input('name')]);
+        $res = [
+            'profile' => $user->pfp_url,
+            'background' => $user->pbg_url,
+            'name' => $user->name,
+        ];
+        return ResponseTrait::responseJSON($res);
+    }
 }

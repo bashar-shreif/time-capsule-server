@@ -21,6 +21,7 @@ class Capsule extends Model
         'color',
         'revealed_at',
         'background',
+        'is_revealed',
     ];
     public function mood()
     {

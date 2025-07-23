@@ -16,8 +16,9 @@ class CapsuleController extends Controller
     protected static string $model = Capsule::class;
     public static function getByUserId($user_id)
     {
-        $capsules = Capsule::where("user_id", $user_id)->get();
-        return ResponseTrait::responseJSON($capsules);
+        $pending = CapsuleService::getPending($user_id);
+        $revealed = CapsuleService::getRevealed($user_id);
+        return ResponseTrait::responseJSON(['pending' => $pending, 'revealed' => $revealed]);
     }
     static function getAllOnMap()
     {
@@ -44,7 +45,6 @@ class CapsuleController extends Controller
     {
         $capsules = CapsuleService::getPending($user_id);
         return ResponseTrait::responseJSON($capsules);
-
     }
     public function getRevealed($user_id)
     {
@@ -53,13 +53,10 @@ class CapsuleController extends Controller
     }
     public function addOrUpdateCapsule(Request $request, $id = null)
     {
-
-
         if ($id) {
             $capsule = CapsuleService::updateCapsule($request, $id);
             return ResponseTrait::responseJSON($capsule);
         }
-
 
         $capsule = CapsuleService::createCapsule($request, $id);
         return ResponseTrait::responseJSON($capsule);

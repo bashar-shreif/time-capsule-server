@@ -43,9 +43,13 @@ class CapsuleService
     }
     static function getRevealed($user_id)
     {
-        return Capsule::where("user_id", $user_id)
+        $capsules = Capsule::where("user_id", $user_id)
             ->where('revealed_at', '<=', now())
             ->get();
+        foreach ($capsules as $capsule) {
+            $capsule->update(['is_revealed' => true]);
+        }
+        return $capsules;
     }
 
     static function createCapsule(Request $request, $id = null)
@@ -65,7 +69,7 @@ class CapsuleService
             'ip_address',
             'revealed_at'
         ]));
-        $media = MediaService::addMedia($request->input('base64'), $capsule->id);
+        $media = MediaService::addMedia($request->input('base64'), $capsule->id, $request->input('username'));
         $capsule->media_url = $media;
 
         return $capsule;

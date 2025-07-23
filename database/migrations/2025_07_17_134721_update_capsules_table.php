@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string("color")->after("message")->nullable()->default(null);
             $table->string("background")->after("color")->nullable()->default(null);
             $table->string("ip_address")->after("background")->nullable()->default(null);
+            $table->boolean("is_revealed")->after("ip_address")->default(false);
         });
     }
 
